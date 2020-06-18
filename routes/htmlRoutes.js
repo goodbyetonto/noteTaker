@@ -9,7 +9,7 @@ module.exports = function (app) {
     // HTML GET Requests
 
     app.get("/notes", function (req, res) {
-        res.sendFile(path.join(__dirname, "..Public/notes.html"));
+        res.sendFile(path.join(__dirname, "../Public/notes.html"));
     });
 
     app.get("/", function (req, res) {
