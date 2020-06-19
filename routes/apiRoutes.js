@@ -1,6 +1,7 @@
 // Dependenciess
 
-var notesDb = require("../Data/db.json");
+const notesDb = require("../Data/db.json");
+const fs = require("fs");
 
 // ROUTING
 
@@ -8,17 +9,35 @@ module.exports = function (app) {
 
     // API GET Requests
 
-    app.get("/api/notes", function (req, res) {
-        res.json(notesDb);
+    app.get("/api/notes", (req, res) => {
+        fs.readFile("./Data/db.json", (err, data) => {
+            if (err) throw err;
+            res.json(JSON.parse(data));
+        })
     });
+
 
     // API POST Requests
 
-    app.post("/api/notes", function (req, res) {
-        notesDb.push(req.body);
-        notesDb.id = notesDb.length; 
-        console.log(notesDb); 
-        return res.json();
+    app.post("/api/notes", (req, res) => {
+        const newNote = req.body;
+
+        fs.readFile("./Data/db.json", (err, data) => {
+            if (err) throw err;
+
+            const notesArray = JSON.parse(data);
+            newNote.id = notesArray.length;
+            console.log(newNote);
+            notesArray.push(newNote);
+
+            fs.writeFile("./Data/db.json", JSON.stringify(notesArray), err => {
+                if (err) throw err;
+                console.log('Note added!');
+            });
+        })
+
+        // return the new note
+        res.json(newNote);
     });
 
     // ---------------------------------------------------------------------------
