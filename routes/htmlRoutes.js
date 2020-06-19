@@ -1,4 +1,4 @@
-// Dependencies
+// DEPENDENCIES
 var path = require("path");
 
 
@@ -6,7 +6,7 @@ var path = require("path");
 
 module.exports = function (app) {
 
-    // HTML GET Requests
+    // HTML GET REQUESTS
 
     app.get("/notes", function (req, res) {
         res.sendFile(path.join(__dirname, "../Public/notes.html"));
@@ -16,8 +16,8 @@ module.exports = function (app) {
         res.sendFile(path.join(__dirname, "../Public/index.html"));
     });
 
-    // If no matching route is found default to home
-    app.get("*", function (req, res) {
-        res.sendFile(path.join(__dirname, "../Public/index.html"));
-    });
+    // // Default to index.html
+    // app.get("*", function (req, res) {
+    //     res.sendFile(path.join(__dirname, "../Public/index.html"));
+    // });
 };
